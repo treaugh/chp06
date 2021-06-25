@@ -4,23 +4,24 @@ const theme = createMuiTheme({
     typography: {
       useNextVariants: true,
     },
-    palette: {
+     palette: {
       primary: {
-      light: '#8e8e8e',
-      main: '#616161',
-      dark: '#373737',
-      contrastText: '#fffde7',
+      light: '#8db7d6',
+      main: '#5482c7',
+      dark: '#274675',
+      contrastText: '#e5e6e3',
     },
     secondary: {
-      light: '#ffad42',
-      main: '#f57c00',
-      dark: '#bb4d00',
-      contrastText: '#fffde7',
+      light: '#e8fac3',
+      main: '#cfe3a6',
+      dark: '#9eb374',
+      contrastText: '#e5e6e3',
     },
-      openTitle: '#455a64',
-      protectedTitle: '#f57c00',
+      openTitle: '#718c99',
+      protectedTitle: '#a8c46e',
       type: 'light'
     }
   })
+
 
   export default theme
