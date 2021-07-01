@@ -8,8 +8,9 @@ import helmet from 'helmet'
 import Template from './../template'
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
-import courseRoutes from './routes/course.routes'
-import enrollmentRoutes from './routes/enrollment.routes'
+import shopRoutes from './routes/shop.routes'
+import productRoutes from './routes/product.routes'
+
 
 
 import React from 'react'
@@ -45,21 +46,22 @@ app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 
 app.use('/', userRoutes)
 app.use('/', authRoutes)
-app.use('/', courseRoutes)
-app.use('/', enrollmentRoutes)
+app.use('/', shopRoutes)
+app.use('/', productRoutes)
+
 
 app.get('*', (req, res) => {
   const sheets = new ServerStyleSheets()
   const context = {}
   const markup = ReactDOMServer.renderToString(
     sheets.collect(
-          <StaticRouter location={req.url} context={context}>
-            <ThemeProvider theme={theme}>
-              <MainRouter />
-            </ThemeProvider>
-          </StaticRouter>
-        )
-    )
+      <StaticRouter location={req.url} context={context}>
+          <ThemeProvider theme={theme}>
+            <MainRouter/>
+          </ThemeProvider>
+      </StaticRouter>
+     )
+  )
     if (context.url) {
       return res.redirect(303, context.url)
     }

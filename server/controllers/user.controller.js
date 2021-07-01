@@ -1,6 +1,11 @@
 import User from '../models/user.model'
 import extend from 'lodash/extend'
 import errorHandler from './../helpers/dbErrorHandler'
+import request from 'request'
+import config from './../../config/config'
+
+
+
 
 const create = async (req, res) => {
   const user = new User(req.body)
@@ -80,15 +85,28 @@ const remove = async (req, res) => {
   }
 }
 
-const isEducator = (req, res, next) => {
-  const isEducator = req.profile && req.profile.educator
-  if (!isEducator) {
+const isSeller = (req, res, next) => {
+  const isSeller = req.profile && req.profile.seller
+  if (!isSeller) {
     return res.status('403').json({
-      error: "User is not an educator"
+      error: "User is not a seller"
     })
   }
   next()
 }
+
+
+
+const stripeCustomer = (req, res, next) => {
+  if(req.profile.stripe_customer){
+      
+      
+  }else{
+
+  }
+}
+
+
 
 export default {
   create,
@@ -97,5 +115,5 @@ export default {
   list,
   remove,
   update,
-  isEducator
+  isSeller
 }

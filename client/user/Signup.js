@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 600,
     margin: 'auto',
     textAlign: 'center',
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(5),
     paddingBottom: theme.spacing(2)
   },
   error: {
@@ -47,6 +47,7 @@ export default function Signup() {
     name: '',
     password: '',
     email: '',
+    birthday: '',
     open: false,
     error: ''
   })
@@ -59,7 +60,8 @@ export default function Signup() {
     const user = {
       name: values.name || undefined,
       email: values.email || undefined,
-      password: values.password || undefined
+      password: values.password || undefined,
+      birthday: values.birthday || undefined
     }
     create(user).then((data) => {
       if (data.error) {
@@ -68,8 +70,7 @@ export default function Signup() {
         setValues({ ...values, error: '', open: true})
       }
     })
-  }
-
+  }   
     return (<div>
       <Card className={classes.card}>
         <CardContent>
@@ -78,6 +79,7 @@ export default function Signup() {
           </Typography>
           <TextField id="name" label="Name" className={classes.textField} value={values.name} onChange={handleChange('name')} margin="normal"/><br/>
           <TextField id="email" type="email" label="Email" className={classes.textField} value={values.email} onChange={handleChange('email')} margin="normal"/><br/>
+          <TextField id="birthday" type="birthday" label="Birthday" className={classes.textField} value={values.birthday} onChange={handleChange('birthday')} margin="normal"/><br/>
           <TextField id="password" type="password" label="Password" className={classes.textField} value={values.password} onChange={handleChange('password')} margin="normal"/>
           <br/> {
             values.error && (<Typography component="p" color="error">
@@ -105,5 +107,5 @@ export default function Signup() {
         </DialogActions>
       </Dialog>
     </div>
-    )
+  )
 }

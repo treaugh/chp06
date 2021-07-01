@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Icon from '@material-ui/core/Icon'
 import { makeStyles } from '@material-ui/core/styles'
-import {create} from './api-course.js'
+import {create} from './api-shop.js'
 import {Link, Redirect} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 600,
     margin: 'auto',
     textAlign: 'center',
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(5),
     paddingBottom: theme.spacing(2)
   },
   error: {
@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     marginTop: theme.spacing(2),
-    color: theme.palette.openTitle
+    color: theme.palette.openTitle,
+    fontSize: '1em'
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -44,35 +45,36 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function NewCourse() {
+export default function NewShop() {
   const classes = useStyles()
   const [values, setValues] = useState({
       name: '',
       description: '',
       image: '',
-      category: '',
       redirect: false,
       error: ''
   })
   const jwt = auth.isAuthenticated()
 
+  
   const handleChange = name => event => {
     const value = name === 'image'
       ? event.target.files[0]
       : event.target.value
     setValues({...values, [name]: value })
   }
+
   const clickSubmit = () => {
-    let courseData = new FormData()
-    values.name && courseData.append('name', values.name)
-    values.description && courseData.append('description', values.description)
-    values.image && courseData.append('image', values.image)
-    values.category && courseData.append('category', values.category)
+    const jwt = auth.isAuthenticated()
+    let shopData = new FormData()
+    values.name && shopData.append('name', values.name)
+    values.description && shopData.append('description', values.description)
+    values.image && shopData.append('image', values.image)
     create({
       userId: jwt.user._id
     }, {
       t: jwt.token
-    }, courseData).then((data) => {
+    }, shopData).then((data) => {
       if (data.error) {
         setValues({...values, error: data.error})
       } else {
@@ -82,43 +84,49 @@ export default function NewCourse() {
   }
 
     if (values.redirect) {
-      return (<Redirect to={'/teach/courses'}/>)
+      return (<Redirect to={'/seller/shops'}/>)
     }
+
+
     return (<div>
-      <Card className={classes.card}>
+      <Card>
         <CardContent>
-          <Typography variant="h6" className={classes.title}>
-            New Course
+          <Typography type="headline" component="h2">
+            New Shop
           </Typography>
           <br/>
-          <input accept="image/*" onChange={handleChange('image')} className={classes.input} id="icon-button-file" type="file" />
+
+  
+          <input accept="image/*" onChange={handleChange('image')}
+           id="icon-button-file" type="file" />
           <label htmlFor="icon-button-file">
             <Button variant="contained" color="secondary" component="span">
-              Upload Photo
+              Upload Logo
               <FileUpload/>
             </Button>
-          </label> <span className={classes.filename}>{values.image ? values.image.name : ''}</span><br/>
-          <TextField id="name" label="Name" className={classes.textField} value={values.name} onChange={handleChange('name')} margin="normal"/><br/>
+          </label> <span>{values.image ? values.image.name : ''}</span>
+        
+          <br/>
+
+          <TextField id="name" label="Name" value={values.name} onChange={handleChange('name')}/><br/>
           <TextField
             id="multiline-flexible"
             label="Description"
             multiline
             rows="2"
             value={values.description}
-            onChange={handleChange('description')}
-            className={classes.textField}
-            margin="normal"
-          /><br/> 
-          <TextField id="category" label="Category" className={classes.textField} value={values.category} onChange={handleChange('category')} margin="normal"/><br/>
-          {
+            onChange={handleChange('description')}/>
+         
+            
+            <br/> {
             values.error && (<Typography component="p" color="error">
-              <Icon color="error" className={classes.error}>error</Icon>
+              <Icon color="error">error</Icon>
               {values.error}</Typography>)
           }
         </CardContent>
         <CardActions>
           <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>Submit</Button>
-          <Link to='/teach/courses' className={classes.submit}><Button variant="contained">Cancel</Button></Link>
+          <Link to='/seller/shops' className={classes.submit}><Button variant="contained">Cancel</Button></Link>
         </CardActions>
       </Card>
     </div>)

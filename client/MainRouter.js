@@ -8,15 +8,19 @@ import EditProfile from './user/EditProfile'
 import Profile from './user/Profile'
 import PrivateRoute from './auth/PrivateRoute'
 import Menu from './core/Menu'
-import NewCourse from './course/NewCourse'
-//import Courses from './course/Courses'
-import Course from './course/Course'
-import EditCourse from './course/EditCourse'
-import MyCourses from './course/MyCourses'
-import Enrollment from './enrollment/Enrollment'
+import NewShop from './shop/NewShop'
+import Shops from './shop/Shops'
+import MyShops from './shop/MyShops'
+import Shop from './shop/Shop'
+import EditShop from './shop/EditShop'
+import NewProduct from './product/NewProduct'
+import EditProduct from './product/EditProduct'
+import Product from './product/Product'
+
+
 
 const MainRouter = () => {
-    return (<div>
+  return (<div>
       <Menu/>
       <Switch>
         <Route exact path="/" component={Home}/>
@@ -25,14 +29,21 @@ const MainRouter = () => {
         <Route path="/signin" component={Signin}/>
         <PrivateRoute path="/user/edit/:userId" component={EditProfile}/>
         <Route path="/user/:userId" component={Profile}/>
-        <Route path="/course/:courseId" component={Course}/>
-        <PrivateRoute path="/teach/courses" component={MyCourses}/>
-        
-        <PrivateRoute path="/teach/course/new" component={NewCourse}/>
-        <PrivateRoute path="/teach/course/edit/:courseId" component={EditCourse}/>
-        <PrivateRoute path="/teach/course/:courseId" component={Course}/>
-        <PrivateRoute path="/learn/:enrollmentId" component={Enrollment}/>
 
+        
+        <Route path="/product/:productId" component={Product}/>
+        <Route path="/shops/all" component={Shops}/>
+        <Route path="/shops/:shopId" component={Shop}/>
+
+     
+
+        <PrivateRoute path="/seller/shops" component={MyShops}/>
+        <PrivateRoute path="/seller/shop/new" component={NewShop}/>
+        <PrivateRoute path="/seller/shop/edit/:shopId" component={EditShop}/>
+        <PrivateRoute path="/seller/:shopId/products/new" component={NewProduct}/>
+        <PrivateRoute path="/seller/:shopId/:productId/edit" component={EditProduct}/>
+
+       
       </Switch>
     </div>)
 }
